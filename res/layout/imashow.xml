@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+   
+    android:layout_height="300dp"
+    android:background="#333333" >
+
+    <com.safesupervision.view.MyWebView
+        android:visibility="gone"
+        android:id="@+id/web_imashow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </com.safesupervision.view.MyWebView>
+
+    <ImageView
+        android:id="@+id/ima_show"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:id="@+id/ima_dialog_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+       android:paddingRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+       
+        android:src="@drawable/ima_close" />
+
+    <ImageView
+        android:id="@+id/ima_leftArrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+  
+        android:src="@drawable/ima_left_arrow" />
+
+    <ImageView
+        android:id="@+id/ima_rightArrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+      
+        android:src="@drawable/ima_right_arrow" />
+
+</RelativeLayout>

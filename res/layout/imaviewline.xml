@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_horizontal_margin" >
+
+    <ScrollView
+        android:id="@+id/dialog_scrollview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:id="@+id/lin_ima"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+           
+            android:orientation="vertical"
+            android:padding="3dp" >
+
+            <com.safesupervision.view.ProcessImageView
+                android:id="@+id/ima_icon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                />
+
+            <TextView
+                android:id="@+id/tv_imaPath"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+        </LinearLayout>
+    </ScrollView>
+
+    <ImageButton
+        android:id="@+id/ima_close_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/dialog_scrollview"
+        android:layout_alignTop="@+id/dialog_scrollview"
+        android:background="@drawable/dialog_close_button"
+        android:visibility="gone" />
+
+    <ImageButton
+        android:id="@+id/ima_ok_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/dialog_scrollview"
+        android:layout_alignRight="@+id/dialog_scrollview"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:background="@drawable/okicon"
+        android:visibility="gone" />
+
+</RelativeLayout>
