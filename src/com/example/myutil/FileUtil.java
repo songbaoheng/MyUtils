@@ -84,7 +84,8 @@ public class FileUtil {
 	}
 
 	/**
-	 * @return
+	 *获取sd卡路径	
+         * @return
 	 */
 	public static String getSdcardDir() {
 		if (Environment.getExternalStorageState().equalsIgnoreCase(Environment.MEDIA_MOUNTED)) {
