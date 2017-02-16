@@ -250,8 +250,126 @@ public class FileUtil {
 		fis.close();
 		return (double) size / 1024;
 	}
-
 	
+	/**
+	 * 转换文件大小单位
+	 * 
+	 * @param l
+	 * @return String
+	 */
+	public static String convertFileSize(long l) {
+		DecimalFormat df = new DecimalFormat("0.00");
+		long KB = 1024;
+		long MB = 1048576;
+		long GB = 1073741824;
+		String size = "0 字节";
+		double fs = l;
+		if (fs > GB) {
+			size = df.format(fs / GB) + " GB";
+		} else if (fs > MB) {
+			size = df.format(fs / MB) + " MB";
+		} else if (fs > KB) {
+			size = df.format(fs / KB) + " KB";
+		} else {
+			size = fs + " 字节";
+		}
+		return size;
+	}
+
+	/**
+	 * 
+	 * 获得文件编码.<br />
+	 * 
+	 * 
+	 * @param filepath
+	 * @return
+	 * @throws IOException
+	 */
+	public static String getFileCoding(String filepath) throws IOException {
+		byte[] head = new byte[3];
+		FileInputStream inputStream = new FileInputStream(filepath);
+		inputStream.read(head);
+		String code = "gb2312";
+		if (head[0] == -1 && head[1] == -2) {
+			code = "UTF-16";
+		}
+		if (head[0] == -2 && head[1] == -1) {
+			code = "Unicode";
+		}
+		if (head[0] == -17 && head[1] == -69 && head[2] == -65) {
+			code = "UTF-8";
+		}
+		// code = EncodingDetect.getJavaEncode(filepath);
+		// log.info("code=" + code);
+		return code;
+	}
+	
+	/**
+	 * 
+	 * 读取文件返回字符串.<br />
+	 * 
+	 * @param fileName
+	 * @param charset
+	 * @return
+	 */
+	public static String readFileFromByte(String fileName, String charset) {
+		if (charset == null || charset.trim().length() == 0) {
+			charset = "GBK";
+		}
+		String fileString = "";
+		try {
+			fileString = new String(readByteStream(fileName), charset);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+		}
+		return fileString;
+	}
+
+	/**
+	 * 
+	 * 读取文件返回byte[]数组.<br />
+	 * 
+	 * 
+	 * @param filepath
+	 * @return
+	 */
+	public static byte[] readByteStream(String filepath) {
+		byte[] buff = null;
+		if (filepath != null && filepath.trim().length() > 0) {
+			File fp = new File(filepath);
+			buff = new byte[(int) fp.length()];
+			FileInputStream in = null;
+			try {
+				in = new FileInputStream(filepath);
+			} catch (FileNotFoundException e) {
+				log.error(e.getMessage(), e);
+			}
+			try {
+				in.read(buff);
+				in.close();
+			} catch (IOException e) {
+				log.error(e.getMessage(), e);
+			}
+		}
+		return buff;
+	}
+
+	/**
+	 * 
+	 * 分割文件名和文件扩展名.<br />
+	 * 
+	 * @param fileName
+	 * @return
+	 */
+	public static String[] getFileNameAndSuffix(String fileName) {
+		String str[] = new String[2];
+		int i = fileName.lastIndexOf(".");
+		if (i != -1) {
+			str[0] = fileName.substring(0, i);
+			str[1] = fileName.substring(i).toLowerCase();
+		}
+		return str;
+	}
 	/**
 	 * 复制文件
 	 * @param oldpath
@@ -276,6 +394,50 @@ public class FileUtil {
 			e.printStackTrace();
 		}
 
+	}
+	
+	/**
+	 * 
+	 * 文件续写.<br />
+	 * 
+	 * @param filepath
+	 *            文件物理路径
+	 * @param list
+	 *            写入文本集合按行
+	 * @param wrap
+	 *            true自动换行，fasle不自动换行。
+	 * @param code
+	 *            编码格式
+	 */
+	public static void FileWriting(String filepath, List<String> list,
+			boolean wrap, String code) {
+		BufferedWriter writer = null;
+		try {
+			File f = new File(filepath);
+			if (!f.exists()) {
+				f.createNewFile();
+			}
+
+			OutputStreamWriter write = new OutputStreamWriter(
+					new FileOutputStream(f, true), code);
+			writer = new BufferedWriter(write);
+			for (int i = 0; i < list.size(); i++) {
+				if (wrap) {
+					writer.write(list.get(i) + "\r\n");
+				} else {
+					writer.write(list.get(i));
+				}
+			}
+			writer.close();
+		} catch (IOException e) {
+			log.error(e.getMessage(), e);
+		} finally {
+			try {
+				writer.close();
+			} catch (IOException e) {
+				log.error(e.getMessage(), e);
+			}
+		}
 	}
 
 	/**
